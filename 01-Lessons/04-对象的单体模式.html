@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-对象的单体模式</title>
+</head>
+<body>
+<script type="text/javascript">
+    var person = {
+        name: '崔晓昭',
+        age: 26,
+        //Vue的课程中，有很多这样的写法;
+        fav() {
+            console.log(this);
+        }
+    };
+    person.fav();
+</script>
+</body>
+</html>

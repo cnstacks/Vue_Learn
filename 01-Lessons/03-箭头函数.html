@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-箭头函数</title>
+</head>
+<body>
+<script type="text/javascript">
+    // var f = function (a) {
+    //     return a
+    //
+    // };
+    // f(1)
+
+    //箭头函数;
+    // var f = (a) => {
+    //     return a;
+    // }
+
+    //function(){} <==> () => {}//箭头函数，联想Python的三元运算；
+
+    //字面量方式创建对象;
+    var person1 = {
+        name: '日天',
+        age: 30,
+        fav: function () {
+            //console.log('喜欢av1');//分号是结束的标记;
+            //使用时候定义的对象;
+            console.log(this);
+            console.log(arguments);
+            console.log(this.name);
+        }
+    };
+    person1.fav();
+    //以上改成箭头函数;
+    //使用箭头函数的第1个坑！
+    var person2 = {
+        name: '日天',
+        age: 30,
+        fav: () => {
+            //console.log('喜欢av2');//分号是结束的标记;
+            //改成箭头函数后，此时，this就变成了定义时候所使用的对象;指向了我们的window;
+            console.log(this);
+            console.log(this.name);
+        }
+    };
+    person2.fav();
+
+    //使用箭头函数的第2个坑！arguments不能使用！
+    var person3 = {
+        name: '日天',
+        age: 30,
+        fav: () => {
+            //console.log('喜欢av2');//分号是结束的标记;
+            //改成箭头函数后，此时，this就变成了定义时候所使用的对象;指向了我们的window;
+            console.log(this);
+            //console.log(arguments);#Uncaught ReferenceError: arguments is not defined
+            console.log(this.name);
+        }
+    };
+    person3.fav(1, 2, 3, 4, 5);
+</script>
+
+</body>
+</html>

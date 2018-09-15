@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyVue</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        .box2 {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+
+        /*.lunbo{*/
+        /*width: 180px;*/
+        /*overflow: hidden;*/
+        ul {
+            width: 180px;
+            overflow: hidden;
+            list-style: none;
+            margin-left: 10px;
+        }
+
+        ul li {
+            float: left;
+            width: 30px;
+            height: 30px;
+            background: purple;
+            margin-left: 10px;
+            text-height: 30px;
+            text-align: center;
+            color: white;
+
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--插值语法：react {} angular{{}} {%%} <% = %>-->
+    <h3>{{msg}}</h3>
+    <h3>{{1>2?"真的":"假的"}}</h3>
+    <div v-if='show'>哈哈哈</div>
+    <button v-on:click="clickHandler">切换</button>
+    <div v-if="Math.random() > 0.5 ">
+        Now you see me!
+    </div>
+    <div v-else>
+        Now you don't
+    </div>
+    <h3 v-show="isShow" v-bind:title="title">我是一个三级标题</h3>
+    <img v-bind:src="imgSrc" v-bind:alt="time">
+    <div class="box " v-bind:class="{box2:isGreen,box3:isYellow}"></div>
+    <button @click="changeColor">切换颜色</button>
+    <br>
+    <button v-on:click="count+=1">加上{{count}}</button>
+    <!--//声明式的指令：-->
+    <!--//命令式的指令；-->
+    <div class="lunbo">
+        <img :src="currentSrc" @mouseenter="closeTimer" @mouseleave="openTimer">
+        <ul>
+            <li v-for="(item,i) in imgArr" @click="currentHandler(item)">{{i+1}}</li>
+        </ul>
+        <button @click="nextImg">下一张</button>
+        <button @click="beforeImg">上一张</button>
+        <div v-html="str">{{str}}</div>
+    </div>
+</div>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript">
+    //Vue的实例化对象;
+    //Vue的设计模式——MVVM：Model、View、ViewModel;
+    //指令系统：v-*;
+
+    //Vue的核心思想:数据驱动视图！双向的数据绑定：数据《===》视图；
+    var app = new Vue({
+            el: "#app",
+            //小的，假的数据库;
+            data: {
+                msg: "今天学习Vue",
+                show: false,
+                isShow: true,
+                title: "哈哈哈哈",
+                imgSrc: "./canglaoshi.JPG",
+                time: `页面加载于${new Date().toLocaleDateString()}`,
+                isGreen: true,
+                isYellow: true,
+                count: 0,
+                imgArr: [
+                    {id: 1, src: './1.jpeg'},
+                    {id: 2, src: './2.jpeg'},
+                    {id: 3, src: './3.jpeg'},
+                    {id: 4, src: './4.jpeg'}
+                ],
+                currentSrc: "./1.jpeg",
+                currentIndex: 0,
+                timer: null,
+                str:"<p>嘿嘿嘿</p>"
+
+            },
+            //cookie 和session;
+            // created() {
+            //     this.timer = setInterval(this.nextImg, 2000)
+            // },
+            methods: {
+                clickHandler: function () {
+                    // alert(11)
+                    console.log(this);
+                    this.show = !this.show
+                },
+                changeColor() {
+                    this.isGreen = !this.isGreen
+                },
+                currentHandler(item) {
+                    this.currentSrc = item.src
+                },
+                nextImg() {
+                    if (this.currentIndex == this.imgArr.length - 1) {
+                        this.currentIndex = -1;
+                    }
+                    this.currentIndex++;
+                    this.currentSrc = this.imgArr[this.currentIndex].src;
+                },
+                closeTimer() {
+                    clearInterval(this.timer)
+                },
+                openTimer() {
+                    this.timer = setInterval(this.nextImg, 100000)
+                },
+                beforeImg() {
+                    if (this.currentIndex == this.imgArr.length - 1) {
+                        this.currentIndex = -1;
+                    }
+                    this.currentIndex--;
+                    this.currentSrc = this.imgArr[this.currentIndex].src;
+                },
+            }
+        })
+    ;
+    console.log(app);
+    console.log(app.$el);
+    console.log(app.msg);//此方法，不推荐，失去了使用Vue的意义！
+    //简便写法：v-bind~:    v-on:click ~ @click
+</script>
+</body>
+</html>

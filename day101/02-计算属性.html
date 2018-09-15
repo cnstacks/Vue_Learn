@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-计算属性</title>
+</head>
+<body>
+<div id="computed">
+    <div>
+        <!--设置模板语法的初衷是应对简单运算！-->
+        <!--{{msg.split('').reverse().join('')}}-->
+        <!--使用computed中的reverseStr代替;-->
+        {{reverseStr}}
+    </div>
+    <button @click="clickHandler">修改</button>
+</div>
+<script type="text/javascript" src="vue.js"></script>
+<script>
+    var com = new Vue({
+        el: "#computed",
+        data: {
+            msg: 'Hello World!'
+        },
+        methods: {
+            clickHandler() {
+                //this.msg = 'Hello LuffyCity!'
+                console.log(this.reverseStr);
+                this.reverseStr = 'Hello LuffyCity'
+            }
+        },
+        computed: {
+            //默认只有getter方法;
+            //计算属性可以看做是一个watch;
+            // reverseStr() {
+            //     return this.msg.split('').reverse().join('');
+            // }
+            reverseStr: {
+                set: function (newValue) {
+                    this.msg = newValue
+                },
+                get: function () {
+                    return this.msg.split().reverse().join('');
+                },
+            }
+        }
+    })
+</script>
+</body>
+</html>
